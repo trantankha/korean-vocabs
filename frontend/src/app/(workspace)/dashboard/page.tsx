@@ -1,21 +1,26 @@
 "use client";
 
-import { ArrowRight, LoaderCircle, Sparkles } from "lucide-react";
+import { ArrowRight, ClipboardCheck, GraduationCap, LoaderCircle, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { ApiError, api, type DashboardStats } from "@/lib/api";
+import { ApiError, api, type DashboardStats, type StudyProgressSummary } from "@/lib/api";
 
 export default function DashboardPage() {
     const router = useRouter();
     const [stats, setStats] = useState<DashboardStats | null>(null);
+    const [learning, setLearning] = useState<StudyProgressSummary | null>(null);
     const [error, setError] = useState("");
 
     useEffect(() => {
         let active = true;
-        api.dashboard.stats()
-            .then((result) => { if (active) setStats(result); })
+        Promise.all([api.dashboard.stats(), api.study.summary()])
+            .then(([result, progress]) => {
+                if (!active) return;
+                setStats(result);
+                setLearning(progress);
+            })
             .catch((reason: unknown) => {
                 if (!active) return;
                 if (reason instanceof ApiError && reason.status === 401) router.replace("/login");
@@ -25,7 +30,7 @@ export default function DashboardPage() {
     }, [router]);
 
     if (error) return <main className="page-content"><div className="inline-error" role="alert"><span>{error}</span><button onClick={() => router.refresh()}>Retry</button></div></main>;
-    if (!stats) return <main className="page-content"><div className="table-state" role="status"><LoaderCircle className="spin" size={20} /> Loading your progress</div></main>;
+    if (!stats || !learning) return <main className="page-content"><div className="table-state" role="status"><LoaderCircle className="spin" size={20} /> Loading your progress</div></main>;
 
     const highestCategoryCount = Math.max(...stats.by_category.map((category) => category.count), 1);
 
@@ -38,6 +43,15 @@ export default function DashboardPage() {
             <section className="dashboard-overview" aria-label="Vocabulary overview">
                 <div className="overview-total"><span className="overview-label">TOTAL WORDS</span><strong>{stats.total_vocabulary}</strong><span className="overview-caption">in your personal wordbook</span><Sparkles className="overview-sparkle" size={19} aria-hidden="true" /></div>
                 <div className="overview-used"><span className="overview-label">CATEGORIES IN USE</span><strong>{stats.categories_used}<small> / 6</small></strong><span className="overview-caption">with at least one saved word</span></div>
+            </section>
+            <section className="dashboard-section learning-section" aria-labelledby="learning-heading">
+                <div className="dashboard-section-heading"><div><p className="eyebrow">ACTIVE LEARNING</p><h2 id="learning-heading">Learning</h2></div><div className="learning-actions"><Link className="button button-quiet learning-start" href="/study"><GraduationCap size={16} /> Flashcards</Link><Link className="button button-primary learning-start" href="/quiz"><ClipboardCheck size={16} /> Start quiz</Link></div></div>
+                <p className="learning-total">{learning.total} {learning.total === 1 ? "word" : "words"} total</p>
+                <div className="learning-count-grid">
+                    <div className="learning-count learning-new"><span>New</span><strong>{learning.new}</strong></div>
+                    <div className="learning-count learning-in-progress"><span>Learning</span><strong>{learning.learning}</strong></div>
+                    <div className="learning-count learning-mastered"><span>Mastered</span><strong>{learning.mastered}</strong></div>
+                </div>
             </section>
             <section className="dashboard-section" aria-labelledby="level-heading">
                 <div className="dashboard-section-heading"><div><p className="eyebrow">YOUR LEARNING LEVELS</p><h2 id="level-heading">Words by level</h2></div></div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, LayoutDashboard, LoaderCircle, LogOut } from "lucide-react";
+import { BookOpen, ClipboardCheck, LayoutDashboard, LoaderCircle, LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
@@ -45,6 +45,8 @@ export function ProtectedWorkspace({ children }: { children: ReactNode }) {
 
     const dashboardActive = pathname.startsWith("/dashboard");
     const vocabularyActive = pathname.startsWith("/vocabulary");
+    const studyActive = pathname.startsWith("/study");
+    const quizActive = pathname.startsWith("/quiz");
 
     return (
         <main className="workspace-shell">
@@ -54,6 +56,8 @@ export function ProtectedWorkspace({ children }: { children: ReactNode }) {
                 <nav className="side-nav" aria-label="Main navigation">
                     <Link className={`nav-item${dashboardActive ? " active" : ""}`} href="/dashboard"><LayoutDashboard size={18} /> Dashboard</Link>
                     <Link className={`nav-item${vocabularyActive ? " active" : ""}`} href="/vocabulary"><BookOpen size={18} /> Word library</Link>
+                    <Link className={`nav-item${studyActive ? " active" : ""}`} href="/study"><BookOpen size={18} /> Flashcards</Link>
+                    <Link className={`nav-item${quizActive ? " active" : ""}`} href="/quiz"><ClipboardCheck size={18} /> Quiz</Link>
                 </nav>
                 <div className="sidebar-bottom">
                     <div className="profile-row">
@@ -66,7 +70,7 @@ export function ProtectedWorkspace({ children }: { children: ReactNode }) {
             </aside>
             <section className="main-panel">
                 <header className="topbar">
-                    <div className="breadcrumb"><span>My space</span><span aria-hidden="true">/</span><strong>{dashboardActive ? "Dashboard" : "Word library"}</strong></div>
+                    <div className="breadcrumb"><span>My space</span><span aria-hidden="true">/</span><strong>{dashboardActive ? "Dashboard" : studyActive ? "Flashcards" : quizActive ? "Quiz" : "Word library"}</strong></div>
                     <button className="mobile-signout" onClick={logout} aria-label="Sign out"><LogOut size={17} /></button>
                     <div className="topbar-note">Korean, gathered at your pace</div>
                 </header>

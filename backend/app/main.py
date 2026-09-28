@@ -8,6 +8,8 @@ from app.auth import router as auth_router
 from app.config import settings
 from app.database import engine
 from app.dashboard import router as dashboard_router
+from app.quiz import router as quiz_router
+from app.study import router as study_router
 from app.vocabularies import router as vocabulary_router
 
 app = FastAPI(title=settings.app_name)
@@ -34,6 +36,8 @@ async def enforce_trusted_origin(request: Request, call_next):
 app.include_router(auth_router)
 app.include_router(dashboard_router)
 app.include_router(vocabulary_router)
+app.include_router(study_router)
+app.include_router(quiz_router)
 
 
 @app.get("/health", tags=["health"])

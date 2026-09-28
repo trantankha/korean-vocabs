@@ -3,7 +3,13 @@ from app.models import Category, User, Vocabulary
 
 
 def test_initial_models_register_expected_tables() -> None:
-    assert set(Base.metadata.tables) == {"users", "categories", "vocabularies"}
+    assert set(Base.metadata.tables) == {
+        "users",
+        "categories",
+        "vocabularies",
+        "vocabulary_progress",
+        "quiz_answer_receipts",
+    }
 
 
 def test_vocabulary_requires_user_category_and_level() -> None:

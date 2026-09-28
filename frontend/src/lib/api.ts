@@ -1,6 +1,37 @@
 export type User = { id: number; email: string; created_at: string };
 export type Category = { id: number; slug: string; name_ko: string; name_en: string };
 export type VocabularyLevel = "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+export type StudyResult = "REMEMBERED" | "NOT_REMEMBERED";
+export type StudyCard = {
+    id: number;
+    word: string;
+    meaning: string;
+    example: string | null;
+    category_id: number;
+    level: VocabularyLevel;
+};
+export type StudyProgressSummary = { total: number; new: number; learning: number; mastered: number };
+export type QuizDirection = "KOREAN_TO_VIETNAMESE" | "VIETNAMESE_TO_KOREAN";
+export type QuizChoice = { id: string; text: string };
+export type QuizQuestion = {
+    question_token: string;
+    direction: QuizDirection;
+    prompt: string;
+    choices: QuizChoice[];
+};
+export type QuizQuestionSet = {
+    questions: QuizQuestion[];
+    requested: number;
+    matching_vocabulary: number;
+    available: number;
+    limitation: "NO_VOCABULARY" | "NO_MATCHING_VOCABULARY" | "INSUFFICIENT_CHOICES" | null;
+};
+export type QuizAnswer = {
+    correct: boolean;
+    selected_answer: string;
+    correct_answer: string;
+    example: string | null;
+};
 export const vocabularyLevelLabels: Record<VocabularyLevel, string> = {
     BEGINNER: "Beginner",
     INTERMEDIATE: "Intermediate",
@@ -85,6 +116,21 @@ export const api = {
     categories: () => request<Category[]>("/categories"),
     dashboard: {
         stats: () => request<DashboardStats>("/dashboard/stats"),
+    },
+    study: {
+        cards: (params: URLSearchParams) => request<StudyCard[]>(`/study/cards?${params.toString()}`),
+        summary: () => request<StudyProgressSummary>("/study/progress"),
+        record: (vocabulary_id: number, result: StudyResult) => request<void>("/study/progress", {
+            method: "POST",
+            body: JSON.stringify({ vocabulary_id, result }),
+        }),
+    },
+    quiz: {
+        questions: (params: URLSearchParams) => request<QuizQuestionSet>(`/quiz/questions?${params.toString()}`),
+        answer: (question_token: string, selected_choice_id: string) => request<QuizAnswer>("/quiz/answer", {
+            method: "POST",
+            body: JSON.stringify({ question_token, selected_choice_id }),
+        }),
     },
     vocabularies: {
         list: (params: URLSearchParams) => request<VocabularyPage>(`/vocabularies?${params.toString()}`),
