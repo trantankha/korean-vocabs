@@ -1,0 +1,251 @@
+word,meaning,category_slug,example_ko,example_en
+가족,family,people,저는 가족과 함께 살아요.,I live with my family.
+부모님,parents,people,부모님은 집에 계세요.,My parents are at home.
+아버지,father,people,아버지는 회사에 가세요.,My father goes to work.
+어머니,mother,people,어머니는 요리를 하세요.,My mother cooks.
+아빠,dad,people,아빠가 저를 불러요.,Dad calls me.
+엄마,mom,people,엄마와 시장에 가요.,I go to the market with Mom.
+형,older brother (male speaker),people,형은 학생이에요.,My older brother is a student.
+오빠,older brother (female speaker),people,오빠는 대학생이에요.,My older brother is a university student.
+누나,older sister (male speaker),people,누나는 회사에 다녀요.,My older sister works at a company.
+언니,older sister (female speaker),people,언니와 같이 살아요.,I live with my older sister.
+동생,younger sibling,people,동생은 열 살이에요.,My younger sibling is ten years old.
+남동생,younger brother,people,남동생은 축구를 좋아해요.,My younger brother likes soccer.
+여동생,younger sister,people,여동생은 책을 읽어요.,My younger sister reads a book.
+형제,brothers or siblings,people,저는 형제가 두 명 있어요.,I have two brothers.
+자매,sisters,people,저는 자매가 있어요.,I have a sister.
+할아버지,grandfather,people,할아버지는 공원에서 걸으세요.,My grandfather walks in the park.
+할머니,grandmother,people,할머니가 맛있는 음식을 만드세요.,My grandmother makes delicious food.
+아들,son,people,아들은 학교에 가요.,My son goes to school.
+딸,daughter,people,딸은 그림을 그려요.,My daughter draws a picture.
+남편,husband,people,남편은 아침에 커피를 마셔요.,My husband drinks coffee in the morning.
+아내,wife,people,아내와 영화를 봐요.,I watch a movie with my wife.
+부부,married couple,people,그 부부는 한국에 살아요.,The couple lives in Korea.
+친구,friend,people,오늘 친구를 만나요.,I meet a friend today.
+이웃,neighbor,people,이웃에게 인사해요.,I say hello to my neighbor.
+아이,child,people,아이가 놀이터에서 놀아요.,The child plays at the playground.
+일,work,daily-life,오늘 일이 많아요.,I have a lot of work today.
+일상,daily life,daily-life,일상이 바빠요.,My daily life is busy.
+생활,life,daily-life,한국 생활은 재미있어요.,Life in Korea is interesting.
+집안일,housework,daily-life,주말에 집안일을 해요.,I do housework on weekends.
+빨래,laundry,daily-life,오늘 빨래를 해요.,I do the laundry today.
+설거지,washing dishes,daily-life,저녁에 설거지를 해요.,I wash the dishes in the evening.
+청소,cleaning,daily-life,토요일에 청소해요.,I clean on Saturday.
+요리,cooking,daily-life,어머니에게 요리를 배워요.,I learn to cook from my mother.
+산책,walk,daily-life,저녁에 공원에서 산책해요.,I take a walk in the park in the evening.
+쇼핑,shopping,daily-life,친구와 쇼핑해요.,I go shopping with a friend.
+장보기,grocery shopping,daily-life,오늘 장보기를 해요.,I go grocery shopping today.
+숙제,homework,daily-life,집에서 숙제를 해요.,I do my homework at home.
+약속,appointment,daily-life,오늘 친구와 약속이 있어요.,I have plans with a friend today.
+계획,plan,daily-life,주말 계획을 세워요.,I make plans for the weekend.
+준비,preparation,daily-life,여행 준비를 해요.,I prepare for a trip.
+휴식,rest,daily-life,휴식 시간이 필요해요.,I need a break.
+잠,sleep,daily-life,잠이 와요.,I feel sleepy.
+꿈,dream,daily-life,좋은 꿈을 꿨어요.,I had a good dream.
+하루,day,daily-life,하루가 빨리 가요.,The day goes by quickly.
+전화,phone call,daily-life,전화가 왔어요.,I got a phone call.
+문자,text message,daily-life,친구에게 문자를 보내요.,I send a text to a friend.
+사진,photo,daily-life,사진을 찍어요.,I take a photo.
+음악,music,daily-life,음악을 들어요.,I listen to music.
+영화,movie,daily-life,오늘 영화를 봐요.,I watch a movie today.
+인터넷,internet,daily-life,인터넷을 사용해요.,I use the internet.
+밥,rice or meal,food,저는 밥을 먹어요.,I eat rice.
+물,water,food,물을 많이 마셔요.,I drink a lot of water.
+빵,bread,food,아침에 빵을 먹어요.,I eat bread in the morning.
+우유,milk,food,아이가 우유를 마셔요.,The child drinks milk.
+커피,coffee,food,저는 커피를 마셔요.,I drink coffee.
+차,tea,food,따뜻한 차를 마셔요.,I drink warm tea.
+주스,juice,food,오렌지 주스를 마셔요.,I drink orange juice.
+과일,fruit,food,과일을 매일 먹어요.,I eat fruit every day.
+사과,apple,food,사과를 하나 먹어요.,I eat an apple.
+바나나,banana,food,바나나가 달아요.,The banana is sweet.
+딸기,strawberry,food,딸기를 좋아해요.,I like strawberries.
+포도,grapes,food,포도를 씻어요.,I wash the grapes.
+수박,watermelon,food,여름에 수박을 먹어요.,I eat watermelon in summer.
+채소,vegetables,food,채소를 많이 먹어요.,I eat a lot of vegetables.
+고기,meat,food,저녁에 고기를 먹어요.,I eat meat for dinner.
+닭고기,chicken,food,닭고기를 요리해요.,I cook chicken.
+생선,fish,food,생선을 구워요.,I grill fish.
+계란,egg,food,계란을 두 개 샀어요.,I bought two eggs.
+김치,kimchi,food,김치와 밥을 먹어요.,I eat kimchi with rice.
+국,soup,food,따뜻한 국을 먹어요.,I eat warm soup.
+라면,ramyeon,food,점심에 라면을 먹어요.,I eat ramyeon for lunch.
+국수,noodles,food,국수를 좋아해요.,I like noodles.
+떡,rice cake,food,떡을 친구와 나눠 먹어요.,I share rice cake with a friend.
+치즈,cheese,food,빵에 치즈를 넣어요.,I put cheese on bread.
+설탕,sugar,food,커피에 설탕을 넣어요.,I put sugar in my coffee.
+소금,salt,food,음식에 소금을 조금 넣어요.,I add a little salt to the food.
+아침밥,breakfast,food,아침밥을 먹고 학교에 가요.,I eat breakfast and go to school.
+점심,lunch,food,친구와 점심을 먹어요.,I have lunch with a friend.
+저녁,dinner,food,저녁에 가족과 밥을 먹어요.,I eat dinner with my family.
+음식,food,food,한국 음식을 좋아해요.,I like Korean food.
+집,home,places,저는 집에 있어요.,I am at home.
+아파트,apartment,places,우리 가족은 아파트에 살아요.,My family lives in an apartment.
+방,room,places,제 방은 작아요.,My room is small.
+거실,living room,places,거실에서 텔레비전을 봐요.,I watch television in the living room.
+부엌,kitchen,places,어머니는 부엌에 있어요.,My mother is in the kitchen.
+화장실,bathroom,places,화장실은 저쪽에 있어요.,The bathroom is over there.
+시장,market,places,시장에서 과일을 사요.,I buy fruit at the market.
+가게,store,places,가게에서 물을 사요.,I buy water at the store.
+편의점,convenience store,places,편의점은 밤에도 열어요.,The convenience store is open at night too.
+식당,restaurant,places,이 식당은 음식이 맛있어요.,The food at this restaurant is delicious.
+카페,cafe,places,카페에서 친구를 만나요.,I meet a friend at a cafe.
+병원,hospital,places,아이가 병원에 가요.,The child goes to the hospital.
+약국,pharmacy,places,약국에서 약을 사요.,I buy medicine at the pharmacy.
+은행,bank,places,은행에서 돈을 찾아요.,I withdraw money at the bank.
+우체국,post office,places,우체국에서 편지를 보내요.,I send a letter at the post office.
+도서관,library,places,도서관에서 책을 읽어요.,I read a book at the library.
+공원,park,places,주말에 공원에 가요.,I go to the park on weekends.
+회사,company,places,아버지는 회사에 가세요.,My father goes to the office.
+공항,airport,places,공항에서 비행기를 타요.,I take a plane at the airport.
+역,station,places,역에서 기차를 기다려요.,I wait for the train at the station.
+정류장,stop,places,정류장에서 버스를 기다려요.,I wait for the bus at the stop.
+호텔,hotel,places,호텔에서 쉬어요.,I rest at the hotel.
+한국,Korea,places,한국에 살아요.,I live in Korea.
+서울,Seoul,places,서울은 사람이 많아요.,There are many people in Seoul.
+길,road or street,places,이 길은 넓어요.,This road is wide.
+학교,school,school,저는 학교에 가요.,I go to school.
+교실,classroom,school,교실에서 공부해요.,I study in the classroom.
+교과서,textbook,school,교과서를 읽어요.,I read the textbook.
+공책,notebook,school,공책에 이름을 써요.,I write my name in a notebook.
+연필,pencil,school,연필로 그림을 그려요.,I draw a picture with a pencil.
+볼펜,ballpoint pen,school,볼펜으로 답을 써요.,I write the answer with a pen.
+지우개,eraser,school,지우개로 글씨를 지워요.,I erase the writing with an eraser.
+칠판,board,school,선생님이 칠판에 써요.,The teacher writes on the board.
+책상,desk,school,책상 위에 책이 있어요.,There is a book on the desk.
+의자,chair,school,의자에 앉아요.,I sit on a chair.
+수업,class or lesson,school,오늘 수업이 재미있어요.,Today's class is interesting.
+시험,test or exam,school,내일 시험이 있어요.,I have a test tomorrow.
+질문,question,school,질문이 있어요.,I have a question.
+대답,answer,school,대답을 공책에 써요.,I write the answer in my notebook.
+공부,study,school,도서관에서 공부해요.,I study at the library.
+한국어,Korean language,school,한국어를 매일 공부해요.,I study Korean every day.
+영어,English,school,영어 수업을 들어요.,I take an English class.
+수학,math,school,수학 문제를 풀어요.,I solve a math problem.
+과학,science,school,과학을 배우는 게 재미있어요.,Learning science is fun.
+역사,history,school,한국 역사를 공부해요.,I study Korean history.
+대학교,university,school,언니는 대학교에 다녀요.,My older sister attends university.
+학원,academy or institute,school,저녁에 학원에 가요.,I go to an academy in the evening.
+성적,grade or score,school,이번 시험 성적이 좋아요.,My score on this test is good.
+학기,school semester,school,새 학기가 시작해요.,A new semester is starting.
+방학,school vacation,school,방학에 여행을 가요.,I travel during school vacation.
+버스,bus,transportation,버스를 타고 회사에 가요.,I take the bus to work.
+지하철,subway,transportation,지하철로 학교에 가요.,I go to school by subway.
+택시,taxi,transportation,택시를 타고 공항에 가요.,I take a taxi to the airport.
+기차,train,transportation,기차가 역에 도착해요.,The train arrives at the station.
+비행기,airplane,transportation,비행기를 타고 한국에 가요.,I fly to Korea.
+자동차,car,transportation,아버지는 자동차를 운전해요.,My father drives a car.
+자전거,bicycle,transportation,공원에서 자전거를 타요.,I ride a bicycle in the park.
+오토바이,motorcycle,transportation,오토바이가 빠르게 가요.,The motorcycle goes fast.
+배,boat or ship,transportation,배를 타고 섬에 가요.,I take a boat to the island.
+트럭,truck,transportation,큰 트럭이 길을 지나가요.,A big truck passes on the road.
+버스 정류장,bus stop,transportation,버스 정류장에서 버스를 기다려요.,I wait for the bus at the bus stop.
+지하철역,subway station,transportation,지하철역에서 친구를 만나요.,I meet a friend at the subway station.
+교통카드,transit card,transportation,교통카드로 지하철을 타요.,I use a transit card on the subway.
+표,ticket,transportation,기차표를 사요.,I buy a train ticket.
+운전,driving,transportation,아버지는 운전을 잘해요.,My father drives well.
+신호등,traffic light,transportation,신호등이 초록색이에요.,The traffic light is green.
+횡단보도,crosswalk,transportation,횡단보도에서 길을 건너요.,I cross the road at the crosswalk.
+고속도로,highway,transportation,자동차가 고속도로를 달려요.,Cars travel on the highway.
+환승,transfer,transportation,여기에서 지하철을 환승해요.,I transfer to the subway here.
+주차장,parking lot,transportation,주차장에 자동차가 있어요.,There is a car in the parking lot.
+오늘,today,time-dates,오늘 친구를 만나요.,I meet a friend today.
+내일,tomorrow,time-dates,내일 학교에 가요.,I go to school tomorrow.
+어제,yesterday,time-dates,어제 영화를 봤어요.,I watched a movie yesterday.
+지금,now,time-dates,지금 집에 있어요.,I am at home now.
+아침,morning,time-dates,아침에 운동해요.,I exercise in the morning.
+오전,morning or a.m.,time-dates,오전에 수업이 있어요.,I have a class in the morning.
+정오,noon,time-dates,정오에 점심을 먹어요.,I eat lunch at noon.
+오후,afternoon or p.m.,time-dates,오후에 도서관에 가요.,I go to the library in the afternoon.
+새벽,dawn,time-dates,새벽에 일어나요.,I get up at dawn.
+밤,night,time-dates,밤에 책을 읽어요.,I read a book at night.
+주말,weekend,time-dates,주말에 친구를 만나요.,I meet a friend on the weekend.
+평일,weekday,time-dates,평일에는 일해요.,I work on weekdays.
+월요일,Monday,time-dates,월요일에 학교에 가요.,I go to school on Monday.
+화요일,Tuesday,time-dates,화요일에 한국어를 공부해요.,I study Korean on Tuesday.
+수요일,Wednesday,time-dates,수요일에 친구를 만나요.,I meet a friend on Wednesday.
+목요일,Thursday,time-dates,목요일에 시험이 있어요.,I have a test on Thursday.
+금요일,Friday,time-dates,금요일 저녁에 영화를 봐요.,I watch a movie on Friday evening.
+토요일,Saturday,time-dates,토요일에 청소해요.,I clean on Saturday.
+일요일,Sunday,time-dates,일요일에 집에서 쉬어요.,I rest at home on Sunday.
+날짜,date,time-dates,오늘 날짜를 알아요.,I know today's date.
+시간,time,time-dates,지금 시간이 있어요.,I have time now.
+시,hour or o'clock,time-dates,세 시에 만나요.,Let's meet at three o'clock.
+분,minute,time-dates,오 분 기다려요.,I wait for five minutes.
+달,month,time-dates,이번 달은 날씨가 좋아요.,The weather is good this month.
+주,week,time-dates,이번 주에 친구를 만나요.,I meet a friend this week.
+가다,to go,actions,저는 매일 학교에 가요.,I go to school every day.
+오다,to come,actions,친구가 우리 집에 와요.,A friend comes to my house.
+먹다,to eat,actions,저는 아침을 먹어요.,I eat breakfast.
+마시다,to drink,actions,물을 자주 마셔요.,I drink water often.
+보다,to see or watch,actions,저녁에 영화를 봐요.,I watch a movie in the evening.
+듣다,to listen,actions,버스에서 음악을 들어요.,I listen to music on the bus.
+읽다,to read,actions,자기 전에 책을 읽어요.,I read a book before bed.
+쓰다,to write,actions,공책에 한국어를 써요.,I write Korean in a notebook.
+공부하다,to study,actions,도서관에서 공부해요.,I study at the library.
+일하다,to work,actions,아버지는 회사에서 일해요.,My father works at a company.
+쉬다,to rest,actions,주말에 집에서 쉬어요.,I rest at home on the weekend.
+자다,to sleep,actions,저는 밤에 일찍 자요.,I go to bed early at night.
+일어나다,to get up,actions,아침 일곱 시에 일어나요.,I get up at seven in the morning.
+씻다,to wash,actions,식사 전에 손을 씻어요.,I wash my hands before a meal.
+입다,to wear,actions,오늘 코트를 입어요.,I wear a coat today.
+신다,to put on shoes,actions,새 신발을 신어요.,I put on new shoes.
+타다,to ride or take,actions,버스를 타고 학교에 가요.,I take the bus to school.
+내리다,to get off,actions,다음 역에서 내려요.,I get off at the next station.
+사다,to buy,actions,시장에서 과일을 사요.,I buy fruit at the market.
+팔다,to sell,actions,가게에서 과일을 팔아요.,We sell fruit at the store.
+만나다,to meet,actions,친구를 공원에서 만나요.,I meet a friend at the park.
+전화하다,to call,actions,저녁에 어머니에게 전화해요.,I call my mother in the evening.
+말하다,to speak or say,actions,선생님과 한국어로 말해요.,I speak Korean with the teacher.
+물어보다,to ask,actions,모르는 말을 선생님께 물어봐요.,I ask the teacher about a word I do not know.
+대답하다,to answer,actions,질문에 대답해요.,I answer the question.
+기다리다,to wait,actions,역에서 기차를 기다려요.,I wait for the train at the station.
+좋아하다,to like,actions,저는 한국 음식을 좋아해요.,I like Korean food.
+만들다,to make,actions,친구와 김밥을 만들어요.,I make gimbap with a friend.
+요리하다,to cook,actions,오늘 저녁을 요리해요.,I cook dinner today.
+청소하다,to clean,actions,토요일에 방을 청소해요.,I clean my room on Saturday.
+운동하다,to exercise,actions,아침마다 운동해요.,I exercise every morning.
+수영하다,to swim,actions,여름에 수영장에서 수영해요.,I swim at the pool in summer.
+걷다,to walk,actions,저녁에 공원에서 걸어요.,I walk in the park in the evening.
+여행하다,to travel,actions,가족과 부산으로 여행해요.,I travel to Busan with my family.
+찾다,to find or look for,actions,가방에서 열쇠를 찾아요.,I look for my keys in my bag.
+좋다,good,descriptions,이 음식은 좋아요.,This food is good.
+나쁘다,bad,descriptions,오늘 날씨가 나빠요.,The weather is bad today.
+크다,big,descriptions,우리 집은 커요.,Our house is big.
+작다,small,descriptions,제 방은 작아요.,My room is small.
+많다,many or much,descriptions,오늘 일이 많아요.,I have a lot of work today.
+적다,few or little,descriptions,물이 조금 적어요.,There is a little water.
+길다,long,descriptions,이 길은 길어요.,This road is long.
+짧다,short,descriptions,수업이 짧아요.,The class is short.
+높다,high,descriptions,이 산은 높아요.,This mountain is high.
+낮다,low,descriptions,의자가 낮아요.,The chair is low.
+빠르다,fast,descriptions,버스가 빨라요.,The bus is fast.
+느리다,slow,descriptions,인터넷이 느려요.,The internet is slow.
+쉽다,easy,descriptions,이 질문은 쉬워요.,This question is easy.
+어렵다,difficult,descriptions,한국어 문법이 어려워요.,Korean grammar is difficult.
+예쁘다,pretty,descriptions,이 꽃은 예뻐요.,This flower is pretty.
+아름답다,beautiful,descriptions,공원이 아름다워요.,The park is beautiful.
+맛있다,delicious,descriptions,김치가 맛있어요.,The kimchi is delicious.
+맛없다,not tasty,descriptions,이 음식은 맛없어요.,This food does not taste good.
+뜨겁다,hot,descriptions,국이 뜨거워요.,The soup is hot.
+차갑다,cold,descriptions,물이 차가워요.,The water is cold.
+덥다,hot weather,descriptions,오늘은 날씨가 더워요.,The weather is hot today.
+춥다,cold weather,descriptions,겨울에는 추워요.,It is cold in winter.
+바쁘다,busy,descriptions,오늘은 조금 바빠요.,I am a little busy today.
+피곤하다,tired,descriptions,일하고 나서 피곤해요.,I am tired after work.
+깨끗하다,clean,descriptions,화장실이 깨끗해요.,The bathroom is clean.
+가방,bag,objects-things,가방 안에 책이 있어요.,There is a book in the bag.
+지갑,wallet,objects-things,지갑에 카드가 있어요.,There is a card in the wallet.
+열쇠,key,objects-things,열쇠가 책상 위에 있어요.,The key is on the desk.
+휴대폰,mobile phone,objects-things,휴대폰으로 사진을 찍어요.,I take a photo with my phone.
+컴퓨터,computer,objects-things,컴퓨터로 공부해요.,I study on the computer.
+시계,clock or watch,objects-things,시계가 세 시를 가리켜요.,The clock shows three o'clock.
+안경,glasses,objects-things,책을 읽을 때 안경을 써요.,I wear glasses when I read.
+우산,umbrella,objects-things,비가 와서 우산을 써요.,I use an umbrella because it is raining.
+컵,cup,objects-things,컵에 물이 있어요.,There is water in the cup.
+접시,plate,objects-things,접시에 사과가 있어요.,There is an apple on the plate.
+숟가락,spoon,objects-things,숟가락으로 국을 먹어요.,I eat soup with a spoon.
+젓가락,chopsticks,objects-things,젓가락으로 밥을 먹어요.,I eat rice with chopsticks.
+수건,towel,objects-things,수건으로 손을 닦아요.,I dry my hands with a towel.
+비누,soap,objects-things,비누로 손을 씻어요.,I wash my hands with soap.
+거울,mirror,objects-things,거울을 봐요.,I look in the mirror.

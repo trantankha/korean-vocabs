@@ -2171,6 +2171,44 @@ a {
     margin-top: 25px;
 }
 
+.flashcard-example-translation,
+.quiz-example-translation,
+.detail-example-translation {
+    color: #546d5e;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.flashcard-example-translation {
+    margin: 4px 0 0;
+}
+
+.quiz-feedback .quiz-example-translation {
+    margin-top: 3px;
+    color: #718078;
+}
+
+.detail-example-translation {
+    margin-top: 3px;
+}
+
+.shared-row-label {
+    justify-self: end;
+    border: 1px solid #dfe8df;
+    border-radius: 3px;
+    padding: 5px 7px;
+    color: #718078;
+    font-size: 9px;
+    font-weight: 650;
+}
+
+.shared-read-only {
+    margin: 12px 0 0;
+    color: #77847c;
+    font-size: 11px;
+}
+
 @media (max-width: 760px) {
     .learning-section {
         padding-top: 22px;

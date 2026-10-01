@@ -14,6 +14,7 @@ export function VocabularyForm({ vocabularyId }: { vocabularyId?: string }) {
     const [word, setWord] = useState("");
     const [meaning, setMeaning] = useState("");
     const [example, setExample] = useState("");
+    const [exampleEn, setExampleEn] = useState("");
     const [categoryId, setCategoryId] = useState("");
     const [level, setLevel] = useState<VocabularyLevel>("BEGINNER");
     const [loading, setLoading] = useState(true);
@@ -27,11 +28,16 @@ export function VocabularyForm({ vocabularyId }: { vocabularyId?: string }) {
         Promise.all([api.categories(), vocabularyRequest])
             .then(([availableCategories, vocabulary]) => {
                 if (!active) return;
+                if (vocabulary?.is_shared) {
+                    router.replace(`/vocabulary/${vocabulary.id}`);
+                    return;
+                }
                 setCategories(availableCategories);
                 setInitial(vocabulary);
                 setWord(vocabulary?.word ?? "");
                 setMeaning(vocabulary?.meaning ?? "");
                 setExample(vocabulary?.example ?? "");
+                setExampleEn(vocabulary?.example_en ?? "");
                 setCategoryId(String(vocabulary?.category_id ?? availableCategories[0]?.id ?? ""));
                 setLevel(vocabulary?.level ?? "BEGINNER");
                 setLoading(false);
@@ -49,7 +55,7 @@ export function VocabularyForm({ vocabularyId }: { vocabularyId?: string }) {
         event.preventDefault();
         setError("");
         setBusy(true);
-        const data: VocabularyInput = { word: word.trim(), meaning: meaning.trim(), example: example.trim() || null, category_id: Number(categoryId), level };
+        const data: VocabularyInput = { word: word.trim(), meaning: meaning.trim(), example: example.trim() || null, example_en: exampleEn.trim() || null, category_id: Number(categoryId), level };
         try {
             const saved = isEditing && vocabularyId
                 ? await api.vocabularies.update(Number(vocabularyId), data)
@@ -78,6 +84,8 @@ export function VocabularyForm({ vocabularyId }: { vocabularyId?: string }) {
                 <input id="meaning" maxLength={10000} onChange={(event) => setMeaning(event.target.value)} placeholder="School" required value={meaning} />
                 <label htmlFor="example">Example sentence <span className="optional-label">OPTIONAL</span></label>
                 <textarea id="example" maxLength={10000} onChange={(event) => setExample(event.target.value)} placeholder="저는 학교에 가요." rows={4} value={example} />
+                <label htmlFor="example-en">English example translation <span className="optional-label">OPTIONAL</span></label>
+                <textarea id="example-en" maxLength={10000} onChange={(event) => setExampleEn(event.target.value)} placeholder="I go to school." rows={3} value={exampleEn} />
                 <div className="form-select-grid">
                     <div><label htmlFor="category">Category</label><div className="form-select-wrap"><select id="category" onChange={(event) => setCategoryId(event.target.value)} required value={categoryId}><option disabled value="">Select a category</option>{categories.map((category) => <option key={category.id} value={category.id}>{category.name_ko} · {category.name_en}</option>)}</select><ChevronDown size={15} /></div></div>
                     <div><label htmlFor="level">Level</label><div className="form-select-wrap"><select id="level" onChange={(event) => setLevel(event.target.value as VocabularyLevel)} value={level}>{Object.entries(vocabularyLevelLabels).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select><ChevronDown size={15} /></div></div>

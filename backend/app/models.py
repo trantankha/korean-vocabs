@@ -43,12 +43,13 @@ class Vocabulary(Base):
     )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(
-        ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    user_id: Mapped[int | None] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=True
     )
     word: Mapped[str] = mapped_column(String(200), nullable=False)
     meaning: Mapped[str] = mapped_column(Text, nullable=False)
     example: Mapped[str | None] = mapped_column(Text)
+    example_en: Mapped[str | None] = mapped_column(Text)
     category_id: Mapped[int] = mapped_column(
         ForeignKey("categories.id", ondelete="RESTRICT"), nullable=False
     )
@@ -58,7 +59,7 @@ class Vocabulary(Base):
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
 
-    user: Mapped[User] = relationship(back_populates="vocabularies")
+    user: Mapped[User | None] = relationship(back_populates="vocabularies")
     category: Mapped[Category] = relationship(back_populates="vocabularies")
 
 
@@ -111,4 +112,5 @@ class QuizAnswerReceipt(Base):
     selected_answer: Mapped[str] = mapped_column(Text, nullable=False)
     correct_answer: Mapped[str] = mapped_column(Text, nullable=False)
     example: Mapped[str | None] = mapped_column(Text)
+    example_en: Mapped[str | None] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

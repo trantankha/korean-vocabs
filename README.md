@@ -41,6 +41,18 @@ Vocabulary endpoints are `GET /categories` and authenticated `GET`, `POST`, `PUT
 
 The dashboard endpoint is `GET /dashboard/stats` and returns total words, counts by level, categories in use, and counts by category for the signed-in user.
 
+## Seed the beginner dataset
+
+After running `alembic upgrade head`, seed the shared 250-word Beginner dataset from `backend/`:
+
+```powershell
+python -m app.seed_vocabulary
+```
+
+The command validates required Korean and English content, normalized Korean uniqueness, canonical category counts, and category labels before inserting. It is safe to run repeatedly. Shared vocabulary is read-only in the UI; each user's Flashcard and Quiz progress remains private.
+
+The dataset expands the canonical categories to ten and includes Korean example sentences with English translations. Vocabulary search, category/level filters, Flashcards, and Quiz include shared records while a user's matching personal word takes precedence for that user.
+
 Run backend tests from `backend/` with `pytest`.
 
 ## Start the frontend
@@ -56,7 +68,7 @@ npm run dev
 The frontend is available at `http://localhost:3000`.
 The browser calls the API at `NEXT_PUBLIC_API_URL` with credentials enabled. For local development, the client automatically matches `localhost` or `127.0.0.1` between the frontend and API so the `SameSite=Lax` authentication cookie stays same-site. Keep the frontend origin in the backend `CORS_ORIGINS` allowlist.
 
-The root URL redirects to `/dashboard`. Main routes are `/login`, `/register`, `/dashboard`, `/vocabulary`, `/vocabulary/new`, `/vocabulary/[id]`, and `/vocabulary/[id]/edit`.
+The root URL redirects to `/dashboard`. Main routes are `/login`, `/register`, `/dashboard`, `/vocabulary`, `/vocabulary/new`, `/vocabulary/[id]`, `/vocabulary/[id]/edit`, `/study`, `/study/summary`, `/quiz`, and `/quiz/summary`.
 
 ## Current foundation
 
@@ -64,4 +76,4 @@ The root URL redirects to `/dashboard`. Main routes are `/login`, `/register`, `
 - `backend/`: FastAPI health endpoints, environment-based settings, SQLAlchemy models, Alembic migrations, and tests.
 - `compose.yaml`: PostgreSQL service with a persistent named volume and health check.
 
-The initial database migration creates `users`, `categories`, and `vocabularies`; a follow-up migration seeds the six predefined categories. Authentication, dashboard statistics, and user-scoped vocabulary management are implemented in the API.
+The database migrations create the user, vocabulary, progress, and quiz receipt tables and seed the ten canonical categories. Authentication, shared and user-owned vocabulary, Flashcards, Quiz, and per-user learning progress are implemented in the API.

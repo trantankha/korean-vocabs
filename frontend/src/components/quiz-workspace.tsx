@@ -127,7 +127,7 @@ export function QuizWorkspace() {
                     {questionSet.limitation === "INSUFFICIENT_CHOICES" && questions.length > 0 && <p className="quiz-availability-detail" role="status">Some words do not have enough unique answers to make four choices, so they were left out.</p>}
                     <div className="study-progress-track" role="progressbar" aria-label="Quiz progress" aria-valuemin={0} aria-valuemax={questions.length} aria-valuenow={questionIndex + 1}><span style={{ width: `${progressPercent}%` }} /></div>
                     <article className="quiz-question">
-                        <span className="quiz-direction">{currentQuestion.direction === "KOREAN_TO_VIETNAMESE" ? "KOREAN TO VIETNAMESE" : "VIETNAMESE TO KOREAN"}</span>
+                        <span className="quiz-direction">{currentQuestion.direction === "KOREAN_TO_ENGLISH" ? "KOREAN_TO_ENGLISH" : "ENGLISH_TO_KOREAN"}</span>
                         <h2>{currentQuestion.prompt}</h2>
                         <div className="quiz-choices" role="group" aria-label="Answer choices">
                             {currentQuestion.choices.map((choice, index) => {
@@ -162,6 +162,7 @@ export function QuizWorkspace() {
                             {!currentAnswer.result.correct && <p>Your answer: {currentAnswer.result.selected_answer}</p>}
                             <p><span>Correct answer</span> {currentAnswer.result.correct_answer}</p>
                             {currentAnswer.result.example && <p className="quiz-example" lang="ko">{currentAnswer.result.example}</p>}
+                            {currentAnswer.result.example_en && <p className="quiz-example-translation" lang="en">{currentAnswer.result.example_en}</p>}
                         </div>}
                     </article>
                     <div className="study-navigation">

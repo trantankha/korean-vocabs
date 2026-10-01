@@ -18,10 +18,11 @@ from app.config import settings
 from app.database import get_db
 from app.learning_progress import record_learning_result
 from app.models import QuizAnswerReceipt, User, Vocabulary
+from app.vocabulary_scope import visible_vocabulary_condition
 
 router = APIRouter(prefix="/quiz", tags=["quiz"])
 VocabularyLevel = Literal["BEGINNER", "INTERMEDIATE", "ADVANCED"]
-QuizDirection = Literal["KOREAN_TO_VIETNAMESE", "VIETNAMESE_TO_KOREAN"]
+QuizDirection = Literal["KOREAN_TO_ENGLISH", "ENGLISH_TO_KOREAN"]
 QuizLimitation = Literal[
     "NO_VOCABULARY",
     "NO_MATCHING_VOCABULARY",
@@ -62,10 +63,11 @@ class QuizAnswerResponse(BaseModel):
     selected_answer: str
     correct_answer: str
     example: str | None
+    example_en: str | None
 
 
 def _answer_text(vocabulary: Vocabulary, direction: QuizDirection) -> str:
-    return vocabulary.meaning if direction == "KOREAN_TO_VIETNAMESE" else vocabulary.word
+    return vocabulary.meaning if direction == "KOREAN_TO_ENGLISH" else vocabulary.word
 
 
 def _answer_digest(user_id: int, vocabulary_id: int, direction: str, answer: str) -> str:
@@ -83,6 +85,7 @@ def _receipt_response(receipt: QuizAnswerReceipt) -> QuizAnswerResponse:
         selected_answer=receipt.selected_answer,
         correct_answer=receipt.correct_answer,
         example=receipt.example,
+        example_en=receipt.example_en,
     )
 
 
@@ -139,7 +142,7 @@ def _make_question(
     vocabulary: list[Vocabulary],
 ) -> QuizQuestion | None:
     candidates: list[tuple[QuizDirection, list[QuizChoice]]] = []
-    for direction in ("KOREAN_TO_VIETNAMESE", "VIETNAMESE_TO_KOREAN"):
+    for direction in ("KOREAN_TO_ENGLISH", "ENGLISH_TO_KOREAN"):
         choices = _select_choices(target, vocabulary, direction)
         if choices is not None:
             candidates.append((direction, choices))
@@ -149,7 +152,7 @@ def _make_question(
     direction, choices = random.choice(candidates)
     prompt = (
         f'What does "{target.word}" mean?'
-        if direction == "KOREAN_TO_VIETNAMESE"
+        if direction == "KOREAN_TO_ENGLISH"
         else f'How do you say "{target.meaning}" in Korean?'
     )
     now = datetime.now(timezone.utc)
@@ -198,7 +201,7 @@ def get_quiz_questions(
 
     vocabulary = list(
         session.scalars(
-            select(Vocabulary).where(Vocabulary.user_id == user.id)
+            select(Vocabulary).where(visible_vocabulary_condition(user.id))
         ).all()
     )
     matching = [
@@ -269,7 +272,7 @@ def submit_quiz_answer(
         or not token_id.isascii()
         or not isinstance(vocabulary_id, int)
         or isinstance(vocabulary_id, bool)
-        or direction not in {"KOREAN_TO_VIETNAMESE", "VIETNAMESE_TO_KOREAN"}
+        or direction not in {"KOREAN_TO_ENGLISH", "ENGLISH_TO_KOREAN"}
         or not isinstance(choices, dict)
         or len(choices) != 4
         or not isinstance(answer_digest, str)
@@ -305,7 +308,7 @@ def submit_quiz_answer(
     vocabulary_item = session.scalar(
         select(Vocabulary).where(
             Vocabulary.id == vocabulary_id,
-            Vocabulary.user_id == user.id,
+            visible_vocabulary_condition(user.id),
         )
     )
     if vocabulary_item is None:
@@ -341,6 +344,7 @@ def submit_quiz_answer(
         selected_answer=selected_answer,
         correct_answer=correct_answer,
         example=vocabulary_item.example,
+        example_en=vocabulary_item.example_en,
     )
     session.add(receipt)
     try:

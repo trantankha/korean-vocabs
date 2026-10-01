@@ -2,13 +2,14 @@ from datetime import datetime
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Query, Response, status
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, computed_field, field_validator
 from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session, selectinload
 
 from app.auth import get_current_user
 from app.database import get_db
 from app.models import Category, User, Vocabulary
+from app.vocabulary_scope import visible_vocabulary_condition
 
 router = APIRouter(tags=["vocabulary"])
 VocabularyLevel = Literal["BEGINNER", "INTERMEDIATE", "ADVANCED"]
@@ -28,6 +29,7 @@ class VocabularyInput(BaseModel):
     word: str = Field(max_length=200)
     meaning: str = Field(max_length=10000)
     example: str | None = Field(default=None, max_length=10000)
+    example_en: str | None = Field(default=None, max_length=10000)
     category_id: int = Field(gt=0)
     level: VocabularyLevel
 
@@ -39,7 +41,7 @@ class VocabularyInput(BaseModel):
             raise ValueError("This field cannot be empty")
         return value
 
-    @field_validator("example")
+    @field_validator("example", "example_en")
     @classmethod
     def strip_optional_example(cls, value: str | None) -> str | None:
         if value is None:
@@ -55,11 +57,18 @@ class VocabularyResponse(BaseModel):
     word: str
     meaning: str
     example: str | None
+    example_en: str | None
     category_id: int
     category: CategoryResponse
     level: VocabularyLevel
     created_at: datetime
     updated_at: datetime
+    user_id: int | None = Field(exclude=True)
+
+    @computed_field
+    @property
+    def is_shared(self) -> bool:
+        return self.user_id is None
 
 
 class VocabularyPage(BaseModel):
@@ -86,7 +95,7 @@ def list_vocabularies(
     user: User = Depends(get_current_user),
     session: Session = Depends(get_db),
 ) -> VocabularyPage:
-    filters = [Vocabulary.user_id == user.id]
+    filters = [visible_vocabulary_condition(user.id)]
     normalized_search = search.strip() if search else ""
     if normalized_search:
         search_pattern = f"%{normalized_search}%"
@@ -133,6 +142,20 @@ def get_owned_vocabulary(session: Session, user_id: int, vocabulary_id: int) -> 
     return vocabulary
 
 
+def get_visible_vocabulary(session: Session, user_id: int, vocabulary_id: int) -> Vocabulary:
+    vocabulary = session.scalar(
+        select(Vocabulary)
+        .options(selectinload(Vocabulary.category))
+        .where(
+            Vocabulary.id == vocabulary_id,
+            visible_vocabulary_condition(user_id),
+        )
+    )
+    if vocabulary is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Vocabulary not found")
+    return vocabulary
+
+
 def ensure_category_exists(session: Session, category_id: int) -> None:
     if session.get(Category, category_id) is None:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail="Invalid category_id")
@@ -162,7 +185,7 @@ def read_vocabulary(
     user: User = Depends(get_current_user),
     session: Session = Depends(get_db),
 ) -> Vocabulary:
-    return get_owned_vocabulary(session, user.id, vocabulary_id)
+    return get_visible_vocabulary(session, user.id, vocabulary_id)
 
 
 @router.put("/vocabularies/{vocabulary_id}", response_model=VocabularyResponse)

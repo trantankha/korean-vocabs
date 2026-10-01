@@ -12,12 +12,13 @@ def test_initial_models_register_expected_tables() -> None:
     }
 
 
-def test_vocabulary_requires_user_category_and_level() -> None:
+def test_vocabulary_requires_category_and_level_but_allows_shared_owner() -> None:
     table = Vocabulary.__table__
 
-    assert not table.c.user_id.nullable
+    assert table.c.user_id.nullable
     assert not table.c.category_id.nullable
     assert not table.c.level.nullable
+    assert table.c.example_en.nullable
     assert any(constraint.name == "ck_vocabularies_level" for constraint in table.constraints)
     assert User.__tablename__ == "users"
     assert Category.__tablename__ == "categories"

@@ -7,11 +7,12 @@ export type StudyCard = {
     word: string;
     meaning: string;
     example: string | null;
+    example_en: string | null;
     category_id: number;
     level: VocabularyLevel;
 };
 export type StudyProgressSummary = { total: number; new: number; learning: number; mastered: number };
-export type QuizDirection = "KOREAN_TO_VIETNAMESE" | "VIETNAMESE_TO_KOREAN";
+export type QuizDirection = "KOREAN_TO_ENGLISH" | "ENGLISH_TO_KOREAN";
 export type QuizChoice = { id: string; text: string };
 export type QuizQuestion = {
     question_token: string;
@@ -31,6 +32,7 @@ export type QuizAnswer = {
     selected_answer: string;
     correct_answer: string;
     example: string | null;
+    example_en: string | null;
 };
 export const vocabularyLevelLabels: Record<VocabularyLevel, string> = {
     BEGINNER: "Beginner",
@@ -42,6 +44,8 @@ export type Vocabulary = {
     word: string;
     meaning: string;
     example: string | null;
+    example_en: string | null;
+    is_shared: boolean;
     category_id: number;
     category: Category;
     level: VocabularyLevel;
@@ -52,6 +56,7 @@ export type VocabularyInput = {
     word: string;
     meaning: string;
     example: string | null;
+    example_en: string | null;
     category_id: number;
     level: VocabularyLevel;
 };

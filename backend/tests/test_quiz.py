@@ -49,8 +49,9 @@ def add_vocabulary(
     word: str,
     meaning: str,
     category_id: int,
-    level: str = "BEGINNER",
+    level: str = "ADVANCED",
     example: str | None = None,
+    example_en: str | None = None,
 ) -> int:
     with SessionLocal() as session:
         vocabulary = Vocabulary(
@@ -60,6 +61,7 @@ def add_vocabulary(
             category_id=category_id,
             level=level,
             example=example,
+            example_en=example_en,
         )
         session.add(vocabulary)
         session.commit()
@@ -69,7 +71,14 @@ def add_vocabulary(
 
 def add_four_words(user_id: int, category_id: int) -> list[int]:
     return [
-        add_vocabulary(user_id, "학교", "School", category_id, example="저는 학교에 가요."),
+        add_vocabulary(
+            user_id,
+            "학교",
+            "School",
+            category_id,
+            example="저는 학교에 가요.",
+            example_en="I go to school.",
+        ),
         add_vocabulary(user_id, "병원", "Hospital", category_id),
         add_vocabulary(user_id, "식당", "Restaurant", category_id),
         add_vocabulary(user_id, "공원", "Park", category_id),
@@ -92,7 +101,7 @@ def correct_choice_id(question: dict) -> str:
     assert vocabulary is not None
     answer = (
         vocabulary.meaning
-        if claims["direction"] == "KOREAN_TO_VIETNAMESE"
+        if claims["direction"] == "KOREAN_TO_ENGLISH"
         else vocabulary.word
     )
     return next(choice_id for choice_id, text in claims["choices"].items() if text == answer)
@@ -105,9 +114,9 @@ def test_questions_use_only_owned_vocabulary_and_four_unique_choices() -> None:
             other_id = create_client_user(other_client)
         category_id = get_category_id("places")
         add_four_words(user_id, category_id)
-        add_vocabulary(other_id, "교실", "Classroom", category_id)
+        add_vocabulary(other_id, "교실", "Classroom", category_id, "ADVANCED")
 
-        response = client.get(f"/quiz/questions?category_id={category_id}&level=BEGINNER&limit=5")
+        response = client.get(f"/quiz/questions?category_id={category_id}&level=ADVANCED&limit=5")
 
         assert response.status_code == 200, response.text
         payload = response.json()
@@ -130,11 +139,11 @@ def test_quiz_can_mix_both_question_directions(monkeypatch: pytest.MonkeyPatch) 
         direction_choices = cycle((lambda values: values[0], lambda values: values[-1]))
         monkeypatch.setattr("app.quiz.random.choice", lambda values: next(direction_choices)(values))
 
-        questions = client.get("/quiz/questions?limit=5").json()["questions"]
+        questions = client.get("/quiz/questions?level=ADVANCED&limit=5").json()["questions"]
 
         assert {question["direction"] for question in questions} == {
-            "KOREAN_TO_VIETNAMESE",
-            "VIETNAMESE_TO_KOREAN",
+            "KOREAN_TO_ENGLISH",
+            "ENGLISH_TO_KOREAN",
         }
 
 
@@ -142,7 +151,7 @@ def test_answers_are_validated_server_side_and_update_shared_progress() -> None:
     with TestClient(app) as client:
         user_id = create_client_user(client)
         vocabulary_ids = add_four_words(user_id, get_category_id("places"))
-        questions = client.get("/quiz/questions?limit=5").json()["questions"]
+        questions = client.get("/quiz/questions?level=ADVANCED&limit=5").json()["questions"]
         assert len(questions) == 4
         headers = {"Origin": TRUSTED_ORIGIN}
         example_question = next(
@@ -180,6 +189,7 @@ def test_answers_are_validated_server_side_and_update_shared_progress() -> None:
             if expected_correct:
                 assert result["selected_answer"] == result["correct_answer"]
                 assert result["example"] == "저는 학교에 가요."
+                assert result["example_en"] == "I go to school."
             else:
                 assert result["selected_answer"] != result["correct_answer"]
 
@@ -236,7 +246,7 @@ def test_user_cannot_answer_another_users_question() -> None:
         owner_id = create_client_user(owner)
         create_client_user(other_user)
         add_four_words(owner_id, get_category_id("places"))
-        question = owner.get("/quiz/questions?limit=5").json()["questions"][0]
+        question = owner.get("/quiz/questions?level=ADVANCED&limit=5").json()["questions"][0]
         choice_id = question["choices"][0]["id"]
 
         response = other_user.post(
@@ -252,7 +262,7 @@ def test_concurrent_duplicate_answers_update_progress_once() -> None:
     with TestClient(app) as question_client:
         user_id = create_client_user(question_client)
         vocabulary_ids = add_four_words(user_id, get_category_id("places"))
-        question = question_client.get("/quiz/questions?limit=5").json()["questions"][0]
+        question = question_client.get("/quiz/questions?level=ADVANCED&limit=5").json()["questions"][0]
         selected_choice_id = correct_choice_id(question)
         token = create_access_token(user_id)
         payload = {
@@ -287,7 +297,7 @@ def test_invalid_token_and_choice_are_rejected() -> None:
     with TestClient(app) as client:
         user_id = create_client_user(client)
         add_four_words(user_id, get_category_id("places"))
-        question = client.get("/quiz/questions?limit=5").json()["questions"][0]
+        question = client.get("/quiz/questions?level=ADVANCED&limit=5").json()["questions"][0]
         headers = {"Origin": TRUSTED_ORIGIN}
 
         invalid_token = client.post(
@@ -305,21 +315,60 @@ def test_invalid_token_and_choice_are_rejected() -> None:
         assert invalid_choice.status_code == 422
 
 
-def test_quiz_reports_empty_and_insufficient_vocabulary_states() -> None:
+def test_quiz_reports_no_matches_and_insufficient_choices(monkeypatch: pytest.MonkeyPatch) -> None:
     with TestClient(app) as empty_client:
         create_client_user(empty_client)
-        empty = empty_client.get("/quiz/questions?limit=5").json()
+        empty = empty_client.get("/quiz/questions?level=ADVANCED&limit=5").json()
         assert empty["questions"] == []
-        assert empty["limitation"] == "NO_VOCABULARY"
+        assert empty["limitation"] == "NO_MATCHING_VOCABULARY"
 
     with TestClient(app) as limited_client:
-        user_id = create_client_user(limited_client)
-        category_id = get_category_id("places")
-        add_vocabulary(user_id, "학교", "School", category_id)
-        add_vocabulary(user_id, "병원", "Hospital", category_id)
+        create_client_user(limited_client)
+        monkeypatch.setattr("app.quiz._make_question", lambda *args: None)
         insufficient = limited_client.get("/quiz/questions?limit=5").json()
         assert insufficient["questions"] == []
         assert insufficient["limitation"] == "INSUFFICIENT_CHOICES"
+
+
+def test_shared_seed_words_work_in_english_quiz_and_record_progress() -> None:
+    with TestClient(app) as client:
+        user_id = create_client_user(client)
+        food_id = get_category_id("food")
+
+        payload = client.get(
+            f"/quiz/questions?category_id={food_id}&level=BEGINNER&limit=5"
+        ).json()
+        assert len(payload["questions"]) == 5
+        question = payload["questions"][0]
+        claims = read_claims(question)
+        selected_choice_id = correct_choice_id(question)
+        response = client.post(
+            "/quiz/answer",
+            json={
+                "question_token": question["question_token"],
+                "selected_choice_id": selected_choice_id,
+            },
+            headers={"Origin": TRUSTED_ORIGIN},
+        )
+
+        assert response.status_code == 200, response.text
+        result = response.json()
+        assert result["correct"] is True
+        assert result["example"]
+        assert result["example_en"]
+        with SessionLocal() as session:
+            vocabulary = session.get(Vocabulary, claims["vocabulary_id"])
+            progress = session.scalar(
+                select(VocabularyProgress).where(
+                    VocabularyProgress.user_id == user_id,
+                    VocabularyProgress.vocabulary_id == claims["vocabulary_id"],
+                )
+            )
+
+        assert vocabulary is not None
+        assert vocabulary.user_id is None
+        assert progress is not None
+        assert progress.remembered_count == 1
 
 
 def test_quiz_routes_require_authentication() -> None:

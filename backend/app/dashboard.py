@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from app.auth import get_current_user
 from app.database import get_db
 from app.models import Category, User, Vocabulary
+from app.vocabulary_scope import visible_vocabulary_condition
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 VocabularyLevel = Literal["BEGINNER", "INTERMEDIATE", "ADVANCED"]
@@ -42,7 +43,7 @@ def read_dashboard_stats(
     level_counts = dict(
         session.execute(
             select(Vocabulary.level, func.count(Vocabulary.id))
-            .where(Vocabulary.user_id == user.id)
+            .where(visible_vocabulary_condition(user.id))
             .group_by(Vocabulary.level)
         ).all()
     )
@@ -55,7 +56,7 @@ def read_dashboard_stats(
             func.count(Vocabulary.id),
         )
         .join(Vocabulary, Vocabulary.category_id == Category.id)
-        .where(Vocabulary.user_id == user.id)
+        .where(visible_vocabulary_condition(user.id))
         .group_by(Category.id, Category.slug, Category.name_ko, Category.name_en)
         .order_by(Category.id)
     ).all()

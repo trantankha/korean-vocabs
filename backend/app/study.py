@@ -10,6 +10,7 @@ from app.auth import get_current_user
 from app.database import get_db
 from app.learning_progress import record_learning_result
 from app.models import User, Vocabulary, VocabularyProgress
+from app.vocabulary_scope import visible_vocabulary_condition
 
 router = APIRouter(prefix="/study", tags=["study"])
 VocabularyLevel = Literal["BEGINNER", "INTERMEDIATE", "ADVANCED"]
@@ -22,6 +23,7 @@ class StudyCard(BaseModel):
     word: str
     meaning: str
     example: str | None
+    example_en: str | None
     category_id: int
     level: VocabularyLevel
 
@@ -63,7 +65,7 @@ def get_study_cards(
             detail="limit must be 5, 10, or 20",
         )
 
-    filters = [Vocabulary.user_id == user.id]
+    filters = []
     if category_id is not None:
         filters.append(Vocabulary.category_id == category_id)
     if level is not None:
@@ -72,7 +74,7 @@ def get_study_cards(
     return list(
         session.scalars(
             select(Vocabulary)
-            .where(*filters)
+            .where(*filters, visible_vocabulary_condition(user.id))
             .order_by(func.random())
             .limit(limit)
         ).all()
@@ -85,12 +87,14 @@ def get_study_progress_summary(
     session: Session = Depends(get_db),
 ) -> StudyProgressSummary:
     total = session.scalar(
-        select(func.count(Vocabulary.id)).where(Vocabulary.user_id == user.id)
+        select(func.count(Vocabulary.id)).where(visible_vocabulary_condition(user.id))
     ) or 0
     status_counts = dict(
         session.execute(
             select(VocabularyProgress.status, func.count(VocabularyProgress.id))
+            .join(Vocabulary, Vocabulary.id == VocabularyProgress.vocabulary_id)
             .where(VocabularyProgress.user_id == user.id)
+            .where(visible_vocabulary_condition(user.id))
             .group_by(VocabularyProgress.status)
         ).all()
     )
@@ -115,7 +119,7 @@ def record_study_progress(
     vocabulary = session.scalar(
         select(Vocabulary).where(
             Vocabulary.id == progress_input.vocabulary_id,
-            Vocabulary.user_id == user.id,
+            visible_vocabulary_condition(user.id),
         )
     )
     if vocabulary is None:

@@ -42,7 +42,7 @@ export default function DashboardPage() {
             </div>
             <section className="dashboard-overview" aria-label="Vocabulary overview">
                 <div className="overview-total"><span className="overview-label">TOTAL WORDS</span><strong>{stats.total_vocabulary}</strong><span className="overview-caption">in your personal wordbook</span><Sparkles className="overview-sparkle" size={19} aria-hidden="true" /></div>
-                <div className="overview-used"><span className="overview-label">CATEGORIES IN USE</span><strong>{stats.categories_used}<small> / 6</small></strong><span className="overview-caption">with at least one saved word</span></div>
+                <div className="overview-used"><span className="overview-label">CATEGORIES IN USE</span><strong>{stats.categories_used}<small> / 10</small></strong><span className="overview-caption">with at least one saved word</span></div>
             </section>
             <section className="dashboard-section learning-section" aria-labelledby="learning-heading">
                 <div className="dashboard-section-heading"><div><p className="eyebrow">ACTIVE LEARNING</p><h2 id="learning-heading">Learning</h2></div><div className="learning-actions"><Link className="button button-quiet learning-start" href="/study"><GraduationCap size={16} /> Flashcards</Link><Link className="button button-primary learning-start" href="/quiz"><ClipboardCheck size={16} /> Start quiz</Link></div></div>

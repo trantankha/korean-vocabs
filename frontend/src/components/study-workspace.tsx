@@ -149,6 +149,7 @@ export function StudyWorkspace() {
                             <div className="flashcard-answer" aria-live="polite">
                                 <p className="flashcard-meaning">{currentCard.meaning}</p>
                                 {currentCard.example && <p className="flashcard-example" lang="ko">{currentCard.example}</p>}
+                                {currentCard.example_en && <p className="flashcard-example-translation" lang="en">{currentCard.example_en}</p>}
                             </div>
                         )}
                     </article>
